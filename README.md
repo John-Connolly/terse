@@ -5,7 +5,7 @@
 
 
 
-####Implementations
+#### Implementations
 
 `>>-` (flatMap) (left associative)
 ```swift
