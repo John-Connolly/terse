@@ -60,3 +60,21 @@ vs
     }
 
 ```
+
+
+
+`>->` is a monadic version of forward composition.  This is a very powerful operator that allows you to create entirely new functions from composition.
+
+```swift
+
+func query(with: String) -> Future<Int> {
+    return Future(2)
+}
+
+func updateCache(with id: Int) -> Future<String> {
+    return Future("Success")
+}
+
+let queryAndUpdate = query >-> updateCache
+
+```
