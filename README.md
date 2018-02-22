@@ -1,5 +1,15 @@
-# terse
 
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/8390081/36566527-2374fe40-17fa-11e8-9cad-e4336fedf5f5.png"  alt="SwiftQ">
+    <br>
+    <br>
+    <a href="LICENSE">
+        <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
+    </a>
+    <a href="https://swift.org">
+        <img src="http://img.shields.io/badge/swift-4.1-brightgreen.svg" alt="Swift 4.1">
+    </a>
+</p>
 
 ### Gallery
 
