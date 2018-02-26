@@ -3,15 +3,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "terse",
+    name: "Terse",
     products: [
-        .library(name: "terse", targets: ["terse"]),
+        .library(name: "Terse", targets: ["Terse"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/async.git", from: "3.0.0-rc")
+        .package(url: "https://github.com/vapor/async.git", from: "1.0.0-rc")
     ],
     targets: [
-        .target(name: "terse", dependencies: ["Async"]),
-        .testTarget(name: "terseTests", dependencies: ["terse"]),
+        .target(name: "Terse", dependencies: ["Async"]),
+        .testTarget(name: "TerseTests", dependencies: ["Terse"]),
     ]
 )
