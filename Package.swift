@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:4.1
 
 import PackageDescription
 
@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "terse", targets: ["terse"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/async.git", .branch("beta"))
+        .package(url: "https://github.com/vapor/async.git", from: "3.0.0-rc")
     ],
     targets: [
         .target(name: "terse", dependencies: ["Async"]),
