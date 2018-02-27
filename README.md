@@ -32,6 +32,11 @@ public func <^> <A, B>(a: Future<A>, f: @escaping (A) -> B) -> Future<B> {
 public func >-> <A, B, C>(f: @escaping (A) -> Future<B>, g: @escaping (B) -> Future<C>) -> (A) -> Future<C> {
 ```
 
+`<*>` Applicative (left associative)
+```swift
+public func <*> <A, B>(f: Future<((A) -> B)>, a: Future<A>) -> Future<B> {
+```
+
 ### Usage
 The goal when creating these operators was to try and prevent heavily nested functions in vapor 3. Here are some strategies to try and avoid that.
 
@@ -72,7 +77,7 @@ vs
 ```
 
 
-
+### Forward composition
 `>->` is a monadic version of forward composition.  This is a very powerful operator that allows you to create entirely new functions from composition.
 
 ```swift
@@ -88,3 +93,18 @@ func updateCache(with id: Int) -> Future<String> {
 let queryAndUpdate = query >-> updateCache
 
 ```
+
+### Applicative
+Applies a future function to a future value
+
+### Curry
+Currying is the technique of translating the evaluation of a function that takes multiple arguments into evaluating a sequence of functions, each with a single argument.
+
+```swift 
+ let renderer: (String, Encodable) -> Future<View> = try req.make(LeafRenderer.self).render
+ 
+ curry(renderer) //(String) -> (Encodable) -> Future<View>
+ overview >>- curry(renderer)("overview")
+```
+This is really useful for using the operators with non unary functions. 
+
