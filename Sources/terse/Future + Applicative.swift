@@ -6,20 +6,13 @@
 //
 
 import Foundation
-import Async
+import NIO
 
-infix operator <*>: MonadicPrecedenceLeft
-
-///  apply an future function to an future value
-public func <*> <T, U>(f: Future<((T?) -> U)>, a: Future<T>) -> Future<U> {
-    return f.flatMap(to: U.self) { f in
-        return a <^> f
-    }
-}
+infix operator <*>: ApplicativePrecedence
 
 ///  apply an future function to an future value
-public func <*> <T, U>(f: Future<((T) -> U)>, a: Future<T>) -> Future<U> {
-    return f.flatMap(to: U.self) { f in
+public func <*> <T, U>(f: EventLoopFuture<((T) -> U)>, a: EventLoopFuture<T>) -> EventLoopFuture<U> {
+    return f.then { f in
         return a <^> f
     }
 }

@@ -18,3 +18,9 @@ precedencegroup MonadicPrecedenceRight {
     lowerThan: LogicalDisjunctionPrecedence
     higherThan: AssignmentPrecedence
 }
+
+precedencegroup ApplicativePrecedence {
+    associativity: left
+    higherThan: LogicalDisjunctionPrecedence
+    lowerThan: NilCoalescingPrecedence
+}

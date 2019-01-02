@@ -8,10 +8,10 @@ let package = Package(
         .library(name: "Terse", targets: ["Terse"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/async.git", from: "1.0.0-rc")
+        .package(url: "https://github.com/apple/swift-nio.git", from: "1.8.0"),
     ],
     targets: [
-        .target(name: "Terse", dependencies: ["Async"]),
+        .target(name: "Terse", dependencies: ["NIO"]),
         .testTarget(name: "TerseTests", dependencies: ["Terse"]),
     ]
 )

@@ -6,12 +6,12 @@
 //
 
 import Foundation
-import Async
+import NIO
 
 infix operator <^>: MonadicPrecedenceLeft
 
-public func <^> <A, B>(a: Future<A>, f: @escaping (A) -> B) -> Future<B> {
-    return a.map(to: B.self) { value in
+public func <^> <A, B>(a: EventLoopFuture<A>, f: @escaping (A) -> B) -> EventLoopFuture<B> {
+    return a.map { value in
         return f(value)
     }
 }
