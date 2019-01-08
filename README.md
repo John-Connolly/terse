@@ -1,6 +1,6 @@
 
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/8390081/36566527-2374fe40-17fa-11e8-9cad-e4336fedf5f5.png"  alt="SwiftQ">
+    <img src="https://user-images.githubusercontent.com/8390081/50832000-2827f080-1323-11e9-8887-a45842aabd9c.png"  alt="SwiftQ">
     <br>
     <br>
     <a href="LICENSE">
@@ -14,33 +14,43 @@
 ### Gallery
 
 
-#### Implementations
+## Implementations
 
+## Monad
 `>>-` (flatMap) (left associative)
 ```swift
-public func >>- <A, B>(a: Future<A>, f: @escaping (A) -> Future<B>) -> Future<B> 
+public func >>- <A, B>(a: EventLoopFuture<A>, f: @escaping (A) -> EventLoopFuture<B>) -> EventLoopFuture<B> 
 ```
-
-`<^>` (map) (left associative)
+`-<<` (flatMap) (right associative)
 ```swift
-public func <^> <A, B>(a: Future<A>, f: @escaping (A) -> B) -> Future<B> {
+public func -<< <A, B>(f: @escaping (A) -> EventLoopFuture<B>, a: EventLoopFuture<A>) -> EventLoopFuture<B> 
 ```
 
 `>=>` Left-to-right Kleisli composition of monads (left associative)
 
 ```swift
-public func >=> <A, B, C>(f: @escaping (A) -> Future<B>, g: @escaping (B) -> Future<C>) -> (A) -> Future<C> {
+public func >=> <A, B, C>(f: @escaping (A) -> EventLoopFuture<B>, g: @escaping (B) -> EventLoopFuture<C>) -> (A) -> EventLoopFuture<C> 
 ```
 
-`<*>` Applicative (left associative)
+`<=<` Kleisli composition of monads (right associative)
+
 ```swift
-public func <*> <A, B>(f: Future<((A) -> B)>, a: Future<A>) -> Future<B> {
+public func <=< <A, B, C>(f: @escaping (B) -> EventLoopFuture<C>, g: @escaping (A) -> EventLoopFuture<B>) -> (A) -> EventLoopFuture<C> 
+```
+
+## Functor
+`<^>` (map) (left associative)
+```swift
+public func <^> <A, B>(a: EventLoopFuture<A>, f: @escaping (A) -> B) -> EventLoopFuture<B> 
+```
+
+## Applicative
+`<*>` Applicative
+```swift
+public func <*> <A, B>(f: EventLoopFuture<((A) -> B)>, a: EventLoopFuture<A>) -> EventLoopFuture<B> 
 ```
 
 ### Usage
-The goal when creating these operators was to try and prevent heavily nested functions in vapor 3. Here are some strategies to try and avoid that.
-
-The example bellow is a really silly and is an extreme example of nesting however it demonstrates terse very well.
 
 ```swift
 
@@ -78,7 +88,7 @@ vs
 
 
 ### Kleisli composition of monads
-`>->` is a monadic version of forward composition.  This allows you to create entirely new functions from composition.
+`>=>` is a monadic version of function composition.
 
 ```swift
 
@@ -90,7 +100,7 @@ func updateCache(with id: Int) -> EventLoopFuture<String> {
     return EventLoopFuture("Success")
 }
 
-let queryAndUpdate = query >-> updateCache
+let queryAndUpdate = query >=> updateCache
 
 ```
 
