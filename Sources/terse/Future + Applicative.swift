@@ -16,3 +16,9 @@ public func <*> <T, U>(f: EventLoopFuture<((T) -> U)>, a: EventLoopFuture<T>) ->
         return a <^> f
     }
 }
+
+public func apply<T, U>(f: EventLoopFuture<((T) -> U)>, a: EventLoopFuture<T>) -> EventLoopFuture<U> {
+    return f.then { f in
+        return a <^> f
+    }
+}

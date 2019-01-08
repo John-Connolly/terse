@@ -26,10 +26,10 @@ public func >>- <A, B>(a: Future<A>, f: @escaping (A) -> Future<B>) -> Future<B>
 public func <^> <A, B>(a: Future<A>, f: @escaping (A) -> B) -> Future<B> {
 ```
 
-`>->` Forward composition (left associative)
+`>=>` Left-to-right Kleisli composition of monads (left associative)
 
 ```swift
-public func >-> <A, B, C>(f: @escaping (A) -> Future<B>, g: @escaping (B) -> Future<C>) -> (A) -> Future<C> {
+public func >=> <A, B, C>(f: @escaping (A) -> Future<B>, g: @escaping (B) -> Future<C>) -> (A) -> Future<C> {
 ```
 
 `<*>` Applicative (left associative)
@@ -77,17 +77,17 @@ vs
 ```
 
 
-### Forward composition
-`>->` is a monadic version of forward composition.  This is a very powerful operator that allows you to create entirely new functions from composition.
+### Kleisli composition of monads
+`>->` is a monadic version of forward composition.  This allows you to create entirely new functions from composition.
 
 ```swift
 
-func query(with: String) -> Future<Int> {
-    return Future(2)
+func query(with: String) -> EventLoopFuture<Int> {
+    return EventLoopFuture(2)
 }
 
-func updateCache(with id: Int) -> Future<String> {
-    return Future("Success")
+func updateCache(with id: Int) -> EventLoopFuture<String> {
+    return EventLoopFuture("Success")
 }
 
 let queryAndUpdate = query >-> updateCache
@@ -106,5 +106,5 @@ Currying is the technique of translating the evaluation of a function that takes
  curry(renderer) //(String) -> (Encodable) -> Future<View>
  overview >>- curry(renderer)("overview")
 ```
-This is really useful for using the operators with non unary functions. 
+This is useful for using the operators with non unary functions. 
 
