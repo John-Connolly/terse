@@ -118,3 +118,8 @@ Currying is the technique of translating the evaluation of a function that takes
 ```
 This is useful for using the operators with non unary functions. 
 
+## SwiftPM
+```
+.package(url: "https://github.com/John-Connolly/terse.git", from: "1.0.0")
+```
+
